@@ -25,3 +25,6 @@ func WithClipboardListener(clipboard Clipboard) ClientOptions {
 		return nil
 	}
 }
+func (c *Client) RegisterListener() error {
+	return c.clipboard.RegisterListener(context.Background(), "Service1")
+}

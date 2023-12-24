@@ -10,13 +10,14 @@ import (
 
 func main() {
 
-	// init Clipboard
+	// init Clipboard/Run in different goroutine
 	clipboard := clipboard.New(clipboard.WithClipboardListenerName("Listener#1"))
 
 	// init core
 	core := core.New(
 		core.WithClipboardListener(clipboard),
 	)
+	core.RegisterListener()
 
 	// init echo framework with handlers and core
 	handleClient := handler.New(

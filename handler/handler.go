@@ -1,16 +1,18 @@
 package handler
 
 import (
+	"context"
+	"fmt"
 	"net/http"
+	"strconv"
 
 	"github.com/labstack/echo/v4"
 	"github.com/labstack/echo/v4/middleware"
 )
 
 type Corer interface {
-	// RegisterListener(ctx context.Context, s string) error
-	// GetClipboard(context.Context) ([]string, error)
-	// SetClipboardValue(ctx context.Context, s string) error
+	GetClipboard(context.Context) ([]string, error)
+	SetClipboardValue(ctx context.Context, s string) error
 }
 type Client struct {
 	core        Corer
@@ -60,10 +62,29 @@ func WithRoutesAndMiddlewares() ClientOptions {
 		c.echo.GET("/", func(c echo.Context) error {
 			return c.String(http.StatusOK, "Hello, Echo with Middleware!")
 		})
+		c.echo.GET("/list", c.getClips)
+		c.echo.GET("/list:index", c.getClips)
 
 		return nil
 	}
 }
 func (c *Client) Start() error {
 	return c.echo.Start(c.port)
+}
+
+func (c *Client) getClips(echoCtx echo.Context) error {
+	clps, err := c.core.GetClipboard(context.Background())
+	if err != nil {
+		return err
+	}
+
+	if index := echoCtx.Param("index"); index != "" {
+		indexNum, err := strconv.Atoi(index[1:])
+		if err != nil {
+			return echoCtx.String(http.StatusBadRequest, fmt.Sprint("Invalid index parameter", err))
+		}
+		return echoCtx.JSON(http.StatusOK, clps[indexNum])
+
+	}
+	return echoCtx.JSON(http.StatusOK, clps)
 }

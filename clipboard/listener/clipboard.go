@@ -2,6 +2,7 @@ package clipboard
 
 type Client struct {
 	ListenerName string
+	Clips        []string
 }
 type ClientOptions func(*Client) error
 
