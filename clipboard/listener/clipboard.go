@@ -3,6 +3,7 @@ package clipboard
 type Client struct {
 	ListenerName string
 	Clips        []string
+	FlagClip     string // to avoid redudnet clips when setClip called
 }
 type ClientOptions func(*Client) error
 

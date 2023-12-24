@@ -24,6 +24,7 @@ func (c *Client) RegisterListener(ctx context.Context, s string) error {
 	return nil
 }
 
+// Avoid Race with mutex, I dont think race is achiveable in this case xD
 func (c *Client) clipboardCopyListener() {
 	var lastClipboardContent string
 
@@ -36,7 +37,7 @@ func (c *Client) clipboardCopyListener() {
 		}
 
 		// Check if the clipboard content has changed
-		if clipboardContent != lastClipboardContent {
+		if clipboardContent != lastClipboardContent && clipboardContent != c.FlagClip {
 			fmt.Println("Clipboard content changed:")
 			fmt.Println(clipboardContent)
 			c.Clips = append(c.Clips, clipboardContent)

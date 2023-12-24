@@ -83,6 +83,7 @@ func (c *Client) getClips(echoCtx echo.Context) error {
 		if err != nil {
 			return echoCtx.String(http.StatusBadRequest, fmt.Sprint("Invalid index parameter", err))
 		}
+		c.core.SetClipboardValue(context.Background(), clps[indexNum])
 		return echoCtx.JSON(http.StatusOK, clps[indexNum])
 
 	}
