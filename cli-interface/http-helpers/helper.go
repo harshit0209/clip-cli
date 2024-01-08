@@ -68,6 +68,5 @@ func (c *Client) SetClips(i int) error {
 	if err != nil {
 		return err
 	}
-	fmt.Println("", clip)
 	return nil
 }

@@ -38,7 +38,7 @@ func (c *Client) clipboardCopyListener() {
 
 		// Check if the clipboard content has changed
 		if clipboardContent != lastClipboardContent && clipboardContent != c.FlagClip {
-			fmt.Println("Clipboard content changed:")
+			fmt.Print("Clipboard content changed:")
 			fmt.Println(clipboardContent)
 			c.Clips = append(c.Clips, clipboardContent)
 			// Update the last clipboard content

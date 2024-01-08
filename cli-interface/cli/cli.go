@@ -23,9 +23,9 @@ func (c *Client) PromotList() {
 		fmt.Printf("%v. %v 📎\n", i, truncateString(clip, 50))
 	}
 	var clip int
-	fmt.Println("Enter index that you want to load")
+	fmt.Println("Enter index that you want to load-clipboard")
 	fmt.Scanf("%d", &clip)
-	fmt.Println(clips[clip])
+	fmt.Println("Copied to clipboard!", clips[clip])
 	c.HttpHelper.SetClips(clip)
 }
 
